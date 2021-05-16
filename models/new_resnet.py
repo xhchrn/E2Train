@@ -163,7 +163,7 @@ class ResNetRecurrentGateSP(nn.Module):
             self._make_group(block, 64, layers[2], group_id=3, pool_size=8,  writer_prefix='group_3')
             final_pool_size = 8
             final_channel_number = 64
-        elif inplanes == 64:
+        elif in_planes == 64:
             self._make_group(block, 64,  layers[0], group_id=1, pool_size=32, writer_prefix='group_1')
             self._make_group(block, 128, layers[1], group_id=2, pool_size=16, writer_prefix='group_2')
             self._make_group(block, 256, layers[2], group_id=3, pool_size=8,  writer_prefix='group_3')
