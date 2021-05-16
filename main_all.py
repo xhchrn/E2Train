@@ -168,8 +168,7 @@ def run_training(args):
     }
 
     # create model
-    # model = models.__dict__[args.arch](args.pretrained, **signsgd_config)
-    model = models.__dict__[args.arch](**signsgd_config)
+    model = models.__dict__[args.arch](args.pretrained, **signsgd_config)
     model.install_gate()
     model = torch.nn.DataParallel(model).cuda()
     best_prec1 = 0
@@ -247,7 +246,8 @@ def run_training(args):
 
         output, masks, _ = model(input_var)
 
-        energy_parameter = np.ones(35,)
+        # energy_parameter = np.ones(35,)
+        energy_parameter = np.ones(len(masks),)
         energy_parameter /= energy_parameter.max()
 
         energy_cost = 0
