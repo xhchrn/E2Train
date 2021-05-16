@@ -168,7 +168,8 @@ def run_training(args):
     }
 
     # create model
-    model = models.__dict__[args.arch](args.pretrained, **signsgd_config)
+    # model = models.__dict__[args.arch](args.pretrained, **signsgd_config)
+    model = models.__dict__[args.arch](**signsgd_config)
     model.install_gate()
     model = torch.nn.DataParallel(model).cuda()
     best_prec1 = 0
