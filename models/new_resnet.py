@@ -151,7 +151,8 @@ class ResNetRecurrentGateSP(nn.Module):
         self.num_layers = layers
         # self.conv1 = conv3x3(3, 16, input_signed=True, predictive_forward=False, writer_prefix='conv1')
         self.conv1 = conv3x3(3, in_planes, input_signed=True, predictive_forward=False, writer_prefix='conv1')
-        self.bn1 = nn.BatchNorm2d(16)
+        # self.bn1 = nn.BatchNorm2d(16)
+        self.bn1 = nn.BatchNorm2d(in_planes)
         self.relu = nn.ReLU(inplace=True)
 
         self.embed_dim = embed_dim
