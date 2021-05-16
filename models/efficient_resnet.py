@@ -171,7 +171,7 @@ class RNNGate(nn.Module):
 class ResNetRecurrentGateSP(nn.Module):
     """SkipNet with Recurrent Gate Model"""
     def __init__(self, block, layers, num_classes=10, embed_dim=10,
-                 hidden_dim=10, gate_type='rnn'):
+                 hidden_dim=10, gate_type='rnn', in_planes=64):
         self.inplanes = in_planes
         super(ResNetRecurrentGateSP, self).__init__()
 
