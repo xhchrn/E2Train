@@ -354,7 +354,8 @@ def validate(args, test_loader, model, criterion):
             # compute output
             output, masks, logprobs = model(input_var)
 
-            energy_parameter = np.ones(35, )
+            # energy_parameter = np.ones(35, )
+            energy_parameter = np.ones(len(masks), )
             energy_parameter /= energy_parameter.max()
 
             energy_cost = 0
