@@ -23,8 +23,7 @@ def str2bool(s):
 
 model_names = sorted(name for name in models.__dict__
                      if name.islower() and not name.startswith('__')
-                     and callable(models.__dict__[name])
-                     )
+                     and callable(models.__dict__[name]))
 
 
 def parse_args():
@@ -83,7 +82,7 @@ def parse_args():
                         help='precision of input/activation')
     parser.add_argument('--num_bits_weight', default=8, type=int,
                         help='precision of weight')
-    parser.add_argument('--num_bits_grad', default=32, type=int,
+    parser.add_argument('--num_bits_grad', default=16, type=int,
                         help='precision of (layer) gradients')
     parser.add_argument('--biprecision', default=False, type=str2bool,
                         help='use biprecision or not')
@@ -92,13 +91,13 @@ def parse_args():
                         help='use predictive net in forward pass')
     parser.add_argument('--predictive_backward', default=True, type=str2bool,
                         help='use predictive net in backward pass')
-    parser.add_argument('--msb_bits', default=4, type=int,
+    parser.add_argument('--msb_bits', default=8, type=int,
                         help='precision of msb part of input')
-    parser.add_argument('--msb_bits_weight', default=4, type=int,
+    parser.add_argument('--msb_bits_weight', default=8, type=int,
                         help='precision of msb part of weight')
     parser.add_argument('--msb_bits_grad', default=16, type=int,
                         help='precision of msb part of (layer) gradient')
-    parser.add_argument('--threshold', default=5e-5, type=float,
+    parser.add_argument('--threshold', default=-0.05, type=float,
                         help='threshold to use full precision gradient calculation')
     parser.add_argument('--sparsify', default=False, type=str2bool,
                         help='sparsify the gradients using predictive net method')
@@ -240,7 +239,7 @@ def run_training(args):
         # compute output
         if rand_flag:
             optimizer.zero_grad()
-            optimizer.step()
+            # optimizer.step()
             global skip_count
             skip_count += 1
             continue
