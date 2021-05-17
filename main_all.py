@@ -260,7 +260,8 @@ def run_training(args):
         global training_cost
         training_cost += (cp_energy / 100) * 0.51 * args.batch_size
         energy_cost *= args.beta
-        if cp_energy <= args.minimum:
+        # if cp_energy <= args.minimum:
+        if cp_energy > args.minimum:
             reg = -1
         else:
             reg = 1
