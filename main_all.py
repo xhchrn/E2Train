@@ -244,10 +244,13 @@ def run_training(args):
             skip_count += 1
             continue
 
-        output, masks, _ = model(input_var)
+        output, masks, _, has_ds = model(input_var)
 
         # energy_parameter = np.ones(35,)
         energy_parameter = np.ones(len(masks),)
+        for i, flag in enumerate(has_ds):
+            if flag:
+                energy_parameter[i] = 0.75
         energy_parameter /= energy_parameter.max()
 
         energy_cost = 0
@@ -353,10 +356,13 @@ def validate(args, test_loader, model, criterion):
             input_var = Variable(input).cuda()
             target_var = Variable(target).cuda()
             # compute output
-            output, masks, logprobs = model(input_var)
+            output, masks, logprobs, has_ds = model(input_var)
 
             # energy_parameter = np.ones(35, )
             energy_parameter = np.ones(len(masks), )
+            for i, flag in enumerate(has_ds):
+                if flag:
+                    energy_parameter[i] = 0.75
             energy_parameter /= energy_parameter.max()
 
             energy_cost = 0
