@@ -248,9 +248,9 @@ def run_training(args):
 
         # energy_parameter = np.ones(35,)
         energy_parameter = np.ones(len(masks),)
-        for i, flag in enumerate(has_ds):
+        for iii, flag in enumerate(has_ds):
             if flag:
-                energy_parameter[i] = 0.75
+                energy_parameter[iii] = 0.75
         energy_parameter /= energy_parameter.max()
 
         energy_cost = 0
@@ -360,9 +360,9 @@ def validate(args, test_loader, model, criterion):
 
             # energy_parameter = np.ones(35, )
             energy_parameter = np.ones(len(masks), )
-            for i, flag in enumerate(has_ds):
+            for iii, flag in enumerate(has_ds):
                 if flag:
-                    energy_parameter[i] = 0.75
+                    energy_parameter[iii] = 0.75
             energy_parameter /= energy_parameter.max()
 
             energy_cost = 0
