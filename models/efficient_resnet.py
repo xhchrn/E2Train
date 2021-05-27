@@ -283,6 +283,7 @@ class ResNetRecurrentGateSP(nn.Module):
 
         masks = []
         gprobs = []
+        has_ds = []
         # must pass through the first layer in first group
         x = getattr(self, 'group1_layer0')(x)
         # gate takes the output of the current layer
@@ -291,6 +292,7 @@ class ResNetRecurrentGateSP(nn.Module):
         mask, gprob = self.control(gate_feature)
         gprobs.append(gprob)
         masks.append(mask.squeeze())
+        has_ds.append(False)
         prev = x  # input of next layer
 
         # for g in range(3):
@@ -298,6 +300,9 @@ class ResNetRecurrentGateSP(nn.Module):
             for i in range(0 + int(g == 0), self.num_layers[g]):
                 if getattr(self, 'group{}_ds{}'.format(g+1, i)) is not None:
                     prev = getattr(self, 'group{}_ds{}'.format(g+1, i))(prev)
+                    has_ds.append(True)
+                else:
+                    has_ds.append(False)
 
                 # if g == 0 and i == 6:
                 #     for j in range(16):
@@ -328,7 +333,7 @@ class ResNetRecurrentGateSP(nn.Module):
         x = x.view(x.size(0), -1)
         x = self.fc(x)
 
-        return x, masks, gprobs
+        return x, masks, gprobs, has_ds
 
 
 # For CIFAR-10
